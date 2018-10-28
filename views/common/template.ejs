@@ -1,4 +1,20 @@
+<style>
+    .fileinput-button {
+        position: relative;
+        display: inline-block;
+        overflow: hidden;
+        margin-bottom: 10px;
+    }
 
+    .fileinput-button input{
+        position:absolute;
+        right: 0px;
+        top: 0px;
+        opacity: 0;
+        -ms-filter: 'alpha(opacity=0)';
+        font-size: 200px;
+    }
+</style>
 <script id="chat-tpl" type="text/template">
     <div class="row" id="chat-window-${chatType}-${chatWithId}" style="display:none;">
         <div class="col-md-12">
@@ -24,7 +40,14 @@
                 </div><!-- /.box-body -->
 
                 <div class="box-footer">
-                    <div   data-type="${chatType}" data-id="${chatWithId}">
+                    <!--input type="file" class="file-upload" style="opacity: 0"-->
+                    <div align="left">
+                        <span class="btn btn-info fileinput-button">
+                            <span>上传</span>
+                            <input type="file">
+                        </span>
+                    </div>
+                    <div data-type="${chatType}" data-id="${chatWithId}">
                         <div class="input-group">
                             <input type="text" name="message" placeholder="Type Message ..." class="form-control">
                             <span class="input-group-btn">

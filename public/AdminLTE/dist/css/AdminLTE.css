@@ -4727,3 +4727,19 @@ table.text-center th {
     white-space: normal!important;
   }
 }
+/*另加css*/
+.fileinput-button {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.fileinput-button input{
+  position:absolute;
+  right: 0px;
+  top: 0px;
+  opacity: 0;
+  -ms-filter: 'alpha(opacity=0)';
+  font-size: 200px;
+}
