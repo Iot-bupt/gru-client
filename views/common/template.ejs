@@ -41,11 +41,15 @@
 
                 <div class="box-footer">
                     <!--input type="file" class="file-upload" style="opacity: 0"-->
-                    <div align="left">
-                        <span class="btn btn-info fileinput-button">
-                            <span>上传</span>
-                            <input type="file">
-                        </span>
+                    <div data-type="${chatType}" data-id="${chatWithId}">
+                        <div align="left">
+                            <span class="btn">
+                                <input type="file" name="file" id="choose-file" />
+                            </span>
+                            <span>
+                                <button type="button" class="btn btn-info upload-file-btn">上传</button>
+                            </span>
+                        </div>
                     </div>
                     <div data-type="${chatType}" data-id="${chatWithId}">
                         <div class="input-group">

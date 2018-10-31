@@ -319,6 +319,42 @@
                 }
 
             });
+
+            $("body").on("click", ".upload-file-btn", function () {
+                // 上传文件
+                var toId = $(this).parent().parent().parent().attr("data-id");
+                var toType = $(this).parent().parent().parent().attr("data-type");
+                var fileObj = $(this).parent().parent().find("input").get(0).files[0];
+                var filename = fileObj.name
+
+                console.log(toId, toType, filename);
+
+                if(!fileObj || !toId || !toType){
+                    return;
+                }
+
+                if (filename != "") {
+                    try {
+                        var obj = new ActiveXObject("ADODB.Stream");//这个必然是IE
+                    }
+                    catch (e) {
+                        var reader = new FileReader();
+                        reader.readAsArrayBuffer(fileObj);//生成ArrayBuffer格式
+                        reader.onloadend = function () {
+                            // 这个事件在读取结束后，无论成功或者失败都会触发
+                            if (reader.error) {
+                                console.log(reader.error);
+                            } else {
+                                // console.log(reader.result)
+                                var blob=new Blob([this.result])//socket默认二进制格式为blob,所以把ArrayBuffer转换为blob
+
+                                _this.sendFile(toId,filename, blob)
+                            }
+                        }
+                        return;
+                    }
+                }
+            });
         },
 
         sendBroadcastMessage: function (toId, content) {
@@ -348,6 +384,20 @@
             _this.data.socket.emit('msg', JSON.stringify(msg));
         },
 
+        //向socket上传文件
+        sendFile: function (toId, filename, blob) {
+            var msg = {
+                type: 0, //1 广播，0 单播给指定target
+                target: {
+                    id:toId
+                },
+                filename: filename
+            };
+
+            _this.data.socket.emit('filemsg', JSON.stringify(msg));
+            _this.data.socket.emit('fileblob', blob)
+            alert('向后台发送二进制文件流')
+        },
 
         showTipDialog: function (title, content) {
             if (!content) {
