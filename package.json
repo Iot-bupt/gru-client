@@ -1,12 +1,12 @@
 {
-    "name":"gru_example",
+    "name": "gru_example",
     "version": "0.0.1",
     "private": true,
     "engines": {
         "node": ">=0.10.x"
     },
     "author": {
-        "email":"sumory.wu@gmail.com"
+        "email": "sumory.wu@gmail.com"
     },
     "scripts": {
         "start": "node ./app.js",
@@ -24,7 +24,7 @@
         "express-session": "1.0.2",
         "multiparty": "3.2.4",
         "log4js": "0.6.16",
-        "request":"2.53.0"
+        "request": "2.53.0"
     },
     "devDependencies": {
         "should": "*",

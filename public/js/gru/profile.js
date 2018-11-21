@@ -148,9 +148,14 @@
                 var data = {};
                 try {
                     if (msg.msgType == 0) {//来自私人的消息
-                        var fromUserId = msg.fromId;
                         var content = msg.content;
+                        var filename = msg.filename;
+                        var contentType = msg.msgContentType;
                         var fromUser = _this.data.userMap[fromUserId];
+
+                        if (filename != null && contentType == 1){
+                            //保存文件
+                        }
                         if (fromUser && msg.target.id == _this.data.myId) {//用户确实存在,并且是发给我的消息
 
                             if($("#chat-window-user-" + fromUserId).css("display")=="none"){//如果聊天窗体没有打开，则标记上新消息提醒的小红点
@@ -359,6 +364,7 @@
 
         sendBroadcastMessage: function (toId, content) {
             var msg = {
+                contentType:0,
                 type: 1, //1 广播，0 单播给指定target
                 target: {
                     id: toId
@@ -372,6 +378,7 @@
         sendUnicastMessage: function (toId, content) {
 
             var msg = {
+                contentType:0,
                 type: 0, //1 广播，0 单播给指定target
                 target: {
                     id:toId
@@ -387,15 +394,18 @@
         //向socket上传文件
         sendFile: function (toId, filename, blob) {
             var msg = {
+                contentType:1,
                 type: 0, //1 广播，0 单播给指定target
                 target: {
                     id:toId
                 },
-                filename: filename
+                content:filename,
+                filename:filename
             };
 
             _this.data.socket.emit('filemsg', JSON.stringify(msg));
-            _this.data.socket.emit('fileblob', blob)
+            _this.data.socket.emit('fileblob', blob);
+            _this.data.socket.emit('fileDownload',JSON.stringify(msg));
             alert('向后台发送二进制文件流')
         },
 
