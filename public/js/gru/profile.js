@@ -139,6 +139,15 @@
                 _this.updateStatus("在线人：" + JSON.stringify(data));
             });
 
+            socket.on('fileDownload',function(data){
+               console.log(data)
+                var content = data.content;
+                var filename = data.filename;
+                var contentType = data.msgContentType;
+                var fromUser = _this.data.userMap[fromUserId];
+
+                //保存文件
+            });
             //接收消息的监听方法
             socket.on('msg', function (msg) {
                 //{"id":0,"createTime":1445676988148,"fromId":984,"msgType":0,"target":{"id":"984","type":-1},"content":"this is a message__1","expireTime":0}
@@ -166,6 +175,9 @@
 
                             if (fromUserId == _this.data.myId) {//说明是自己的消息，应该置于右边
                                 _this.showUserMsg("right", msg.createTime, fromUser, content);
+                                if (filename != null && contentType == 1){
+                                    //呈现缩略图，点击缩略图并触发socket.emit(‘DownloadFile', JSON.stringify(msg))
+                                }
                             } else {
                                 _this.showUserMsg("left", msg.createTime, fromUser, content);
                             }
@@ -405,7 +417,7 @@
 
             _this.data.socket.emit('filemsg', JSON.stringify(msg));
             _this.data.socket.emit('fileblob', blob);
-            _this.data.socket.emit('fileDownload',JSON.stringify(msg));
+            _this.data.socket.emit('sendFileSummory',JSON.stringify(msg));
             alert('向后台发送二进制文件流')
         },
 
