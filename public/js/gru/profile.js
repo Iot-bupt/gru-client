@@ -157,14 +157,12 @@
                 var data = {};
                 try {
                     if (msg.msgType == 0) {//来自私人的消息
+                        var fromUserId = msg.fromId;
                         var content = msg.content;
                         var filename = msg.filename;
                         var contentType = msg.msgContentType;
                         var fromUser = _this.data.userMap[fromUserId];
 
-                        if (filename != null && contentType == 1){
-                            //保存文件
-                        }
                         if (fromUser && msg.target.id == _this.data.myId) {//用户确实存在,并且是发给我的消息
 
                             if($("#chat-window-user-" + fromUserId).css("display")=="none"){//如果聊天窗体没有打开，则标记上新消息提醒的小红点
@@ -175,9 +173,6 @@
 
                             if (fromUserId == _this.data.myId) {//说明是自己的消息，应该置于右边
                                 _this.showUserMsg("right", msg.createTime, fromUser, content);
-                                if (filename != null && contentType == 1){
-                                    //呈现缩略图，点击缩略图并触发socket.emit(‘DownloadFile', JSON.stringify(msg))
-                                }
                             } else {
                                 _this.showUserMsg("left", msg.createTime, fromUser, content);
                             }
