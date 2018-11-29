@@ -406,13 +406,10 @@
                 target: {
                     id:toId
                 },
-                content:filename,
                 filename:filename
             };
 
-            _this.data.socket.emit('filemsg', JSON.stringify(msg));
-            _this.data.socket.emit('fileblob', blob);
-            _this.data.socket.emit('sendFileSummory',JSON.stringify(msg));
+            _this.data.socket.emit('filemsg', JSON.stringify(msg),blob);
             alert('向后台发送二进制文件流')
         },
 
