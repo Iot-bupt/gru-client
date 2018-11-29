@@ -410,6 +410,7 @@
             };
 
             _this.data.socket.emit('filemsg', JSON.stringify(msg),blob);
+            _this.data.socket.emit('sendFileSummory',JSON.stringify(msg));
             alert('向后台发送二进制文件流')
         },
 
