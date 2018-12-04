@@ -360,7 +360,12 @@
                                 // console.log(reader.result)
                                 var blob=new Blob([this.result])//socket默认二进制格式为blob,所以把ArrayBuffer转换为blob
 
-                                _this.sendFile(toId,filename, blob)
+                                if (toType == "group") {
+                                    _this.sendFileToGroup(toId,filename, blob);
+                                } else if (toType == "user") {
+                                    _this.sendFileToUser(toId,filename, blob);
+                                }
+
                             }
                         }
                         return;
@@ -399,10 +404,25 @@
         },
 
         //向socket上传文件
-        sendFile: function (toId, filename, blob) {
+        sendFileToUser: function (toId, filename, blob) {
             var msg = {
                 contentType:1,
                 type: 0, //1 广播，0 单播给指定target
+                target: {
+                    id:toId
+                },
+                filename:filename
+            };
+
+            _this.data.socket.emit('filemsg', JSON.stringify(msg),blob);
+            _this.data.socket.emit('sendFileSummory',JSON.stringify(msg));
+            alert('向后台发送二进制文件流')
+        },
+
+        sendFileToGroup: function (toId, filename, blob) {
+            var msg = {
+                contentType:1,
+                type: 1, //1 广播，0 单播给指定target
                 target: {
                     id:toId
                 },
