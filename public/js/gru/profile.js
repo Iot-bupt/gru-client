@@ -419,6 +419,21 @@
             alert('向后台发送二进制文件流')
         },
 
+        //向socket上传语音消息
+        sendVoiceToUser:function(toId, filename, blob){
+          var msg = {
+              contentType:2,
+              type:0, //1 广播，0 单播给指定target
+              target:{
+                  id:toId
+              },
+              filename:null
+          };
+
+            _this.data.socket.emit('filemsg', JSON.stringify(msg),blob);
+            alert('向后台发送语音消息')
+        },
+
         sendFileToGroup: function (toId, filename, blob) {
             var msg = {
                 contentType:1,
